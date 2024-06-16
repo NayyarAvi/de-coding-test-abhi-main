@@ -64,7 +64,7 @@ object ProcessDataFile {
         val distance = journey("endOdometer").toDouble - journey("startOdometer").toDouble
         val avgSpeed = distance / (durationMS.toFloat / (1000 * 60 * 60))
 
-        println(s"journeyId: ${journeyId} ${driverId} distance ${distance} durationMS  ${durationMS} avgSpeed in kph was ${avgSpeed}")
+        println(s"journeyId: $journeyId $driverId distance $distance durationMS  $durationMS avgSpeed in kph was $avgSpeed")
       }
     }
   }
@@ -79,7 +79,7 @@ object ProcessDataFile {
       val distance = journey("endOdometer").toDouble - journey("startOdometer").toDouble
       val avgSpeed = (distance / (durationMS.toFloat / (1000 * 60 * 60))).ceil
 
-      println(s"journeyId: ${journeyId} ${driverId} distance ${distance} durationMS  ${durationMS} avgSpeed in kph was ${avgSpeed}")
+      println(s"journeyId: $journeyId $driverId distance $distance durationMS  $durationMS avgSpeed in kph was $avgSpeed")
     }
   }
 
@@ -122,7 +122,7 @@ object ProcessDataFile {
     println(s"Most active driver is ${maxEntry._1}")
   }
 
-  def main(args: Array[String]) = {
+  def main(args: Array[String]): Unit = {
     val filePath = args(0)
     val journeysMap: List[Map[String, String]] = getJourneysMap(filePath)
 
