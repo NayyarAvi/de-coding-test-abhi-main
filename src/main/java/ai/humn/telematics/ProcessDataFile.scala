@@ -9,20 +9,22 @@ import scala.math.BigDecimal
 object ProcessDataFile {
 
   def refineDataset(journeysMap: List[Map[String, String]]): List[Map[String, String]] = {
-    var refinedJourneyMap: List[Map[String, String]] = List()
+    // Remove journeys where any value in the row is null or empty
+    var refinedJourneysMap = journeysMap.filter { journey =>
+      !journey.values.exists(value => value == null || value.isEmpty || value.toLowerCase() == "null")
+    }
 
     // filtering duplicate journeys
-    val distinctJourneyMap: List[Map[String, String]] = journeysMap.toSet.toList
+    refinedJourneysMap = refinedJourneysMap.toSet.toList
 
-    // filtering journeys where distance or durationMS is less than 0
-    for (journey <- distinctJourneyMap) {
+    // Further filtering journeys where distance or durationMS is less than 0
+    refinedJourneysMap = refinedJourneysMap.filter { journey =>
       val durationMS = journey("endTime").toLong - journey("startTime").toLong
       val distance = journey("endOdometer").toDouble - journey("startOdometer").toDouble
-      if (distance > 0 && durationMS > 0) {
-        refinedJourneyMap  = refinedJourneyMap :+ journey
-      }
+      distance > 0 && durationMS > 0
     }
-    refinedJourneyMap
+
+    refinedJourneysMap
   }
 
   def getJourneysMap(csvFilePath: String): List[Map[String, String]] = {
@@ -49,8 +51,7 @@ object ProcessDataFile {
     reader.close()
     csvReader.close()
 
-    // returning refined and filtered value
-    refineDataset(dataList)
+    dataList
   }
 
   // Use Case 1: Find journeys that are 90 minutes or more.
@@ -124,14 +125,14 @@ object ProcessDataFile {
 
   def main(args: Array[String]): Unit = {
     val filePath = args(0)
-    val journeysMap: List[Map[String, String]] = getJourneysMap(filePath)
+    val refinedJourneysMap: List[Map[String, String]] = refineDataset(getJourneysMap(filePath))
 
-    printLongJourneys(journeysMap)
+    printLongJourneys(refinedJourneysMap)
     println()
-    printAverageSpeed(journeysMap)
+    printAverageSpeed(refinedJourneysMap)
     println()
-    printTotalMileage(journeysMap)
+    printTotalMileage(refinedJourneysMap)
     println()
-    printActiveDriver(journeysMap)
+    printActiveDriver(refinedJourneysMap)
   }
 }
