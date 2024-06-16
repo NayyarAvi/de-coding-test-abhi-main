@@ -127,11 +127,11 @@ object ProcessDataFile {
     val journeysMap: List[Map[String, String]] = getJourneysMap(filePath)
 
     printLongJourneys(journeysMap)
-    println("\n")
+    println()
     printAverageSpeed(journeysMap)
-    println("\n")
+    println()
     printTotalMileage(journeysMap)
-    println("\n")
+    println()
     printActiveDriver(journeysMap)
   }
 }
