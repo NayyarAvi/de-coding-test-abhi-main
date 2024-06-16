@@ -5,6 +5,12 @@ import utils.DataRefiner.refineJourneys
 
 object ProcessDataFile {
 
+  /**
+   * Main method to execute telematics data processing
+   * Reads journey data, refines it, and performs analytics operations.
+   *
+   * @param args Command-line arguments; expects a CSV file path containing journey data.
+   */
   def main(args: Array[String]): Unit = {
     // storing file path from the arguments in the cmd
     val filePath = args(0)
