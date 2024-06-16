@@ -4,10 +4,12 @@ import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.junit.JUnitRunner
 
+import java.net.URL
+
 @RunWith(classOf[JUnitRunner])
 class ProcessDataFileTest extends FlatSpec with Matchers {
 
-  val testFilePath = this.getClass.getClassLoader.getResource("2021-10-05_journeys.csv")
+  val testFilePath: URL = this.getClass.getClassLoader.getResource("2021-10-05_journeys.csv")
 
   "main" should "process journeys data correctly" in {
     val outputStream = new java.io.ByteArrayOutputStream()
