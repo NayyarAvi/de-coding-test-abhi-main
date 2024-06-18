@@ -1,6 +1,7 @@
 package ai.humn.telematics.utils
 
-import com.opencsv.{CSVParserBuilder, CSVReaderBuilder}
+import com.opencsv.CSVParserBuilder
+import com.opencsv.CSVReaderBuilder
 
 import scala.io.Source
 
